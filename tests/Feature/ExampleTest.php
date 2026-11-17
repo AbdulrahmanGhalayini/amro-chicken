@@ -56,4 +56,15 @@ class ExampleTest extends TestCase
         $this->assertFalse($nobody->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')));
         $this->actingAs($nobody)->get('/admin')->assertForbidden();
     }
+
+    public function test_box_products_show_per_box_label(): void
+    {
+        $this->seed(AmroChickenMenuSeeder::class);
+        $box = Product::where('name_ar', 'علبة كالامار')->firstOrFail();
+        $this->assertTrue($box->isSoldByBox());
+        $this->assertSame('للعلبة', $box->perUnitLabel('ar'));
+
+        $this->get('/menu/amro-chicken')->assertOk()
+            ->assertSee('للعلبة')->assertSee('للقطعة')->assertSee('للكيلو');
+    }
 }

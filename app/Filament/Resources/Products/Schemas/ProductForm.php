@@ -172,11 +172,13 @@ class ProductForm
                 ToggleButtons::make('sale_type')
                     ->label('Sold by')
                     ->options([
-                        'unit' => 'Quantity (piece / box)',
+                        'unit' => 'Piece',
+                        'box' => 'Box',
                         'weight' => 'Weight (kilogram)',
                     ])
                     ->icons([
                         'unit' => 'heroicon-o-cube',
+                        'box' => 'heroicon-o-archive-box',
                         'weight' => 'heroicon-o-scale',
                     ])
                     ->inline()
@@ -204,7 +206,11 @@ class ProductForm
                         ->unique()->sort()->values()->all() ?: null)
                     ->columnSpanFull(),
                 TextInput::make('price')
-                    ->label(fn (callable $get) => $get('sale_type') === 'weight' ? 'Price per 1 kg' : 'Price')
+                    ->label(fn (callable $get) => match ($get('sale_type')) {
+                        'weight' => 'Price per 1 kg',
+                        'box' => 'Price per box',
+                        default => 'Price per piece',
+                    })
                     ->required()
                     ->rule('numeric')
                     // ->default(0)

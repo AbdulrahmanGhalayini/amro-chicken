@@ -95,10 +95,16 @@ class ProductsTable
                 TextColumn::make('sale_type')
                     ->label('Sold by')
                     ->badge()
-                    ->formatStateUsing(fn ($state, $record) => $state === 'weight'
-                        ? 'Kg (' . implode(', ', $record->getWeightChoices()) . ')'
-                        : 'Quantity')
-                    ->color(fn ($state) => $state === 'weight' ? 'warning' : 'gray'),
+                    ->formatStateUsing(fn ($state, $record) => match ($state) {
+                        'weight' => 'Kg (' . implode(', ', $record->getWeightChoices()) . ')',
+                        'box' => 'Box',
+                        default => 'Piece',
+                    })
+                    ->color(fn ($state) => match ($state) {
+                        'weight' => 'warning',
+                        'box' => 'info',
+                        default => 'gray',
+                    }),
                 TextColumn::make('price')
                             ->formatStateUsing(function ($state) {
                     if ($state === null) return null;

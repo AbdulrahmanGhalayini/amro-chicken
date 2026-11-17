@@ -48,6 +48,46 @@ class Product extends Model
         ];
     }
 
+    /**
+     * How a product is sold: by the piece, by the box, or by weight (price per kg).
+     */
+    public const SALE_TYPES = ['unit', 'box', 'weight'];
+
+    /**
+     * Short unit names shown to customers, per sale type and locale.
+     */
+    public const UNIT_LABELS = [
+        'unit' => ['ar' => 'قطعة', 'en' => 'piece'],
+        'box' => ['ar' => 'علبة', 'en' => 'box'],
+        'weight' => ['ar' => 'كغ', 'en' => 'kg'],
+    ];
+
+    /**
+     * "Per ..." label shown next to the price on the menu.
+     */
+    public const PER_UNIT_LABELS = [
+        'unit' => ['ar' => 'للقطعة', 'en' => '/ piece'],
+        'box' => ['ar' => 'للعلبة', 'en' => '/ box'],
+        'weight' => ['ar' => 'للكيلو', 'en' => '/ kg'],
+    ];
+
+    public function saleType(): string
+    {
+        return in_array($this->sale_type, self::SALE_TYPES, true) ? $this->sale_type : 'unit';
+    }
+
+    public function perUnitLabel(?string $locale = null): string
+    {
+        $locale = ($locale ?? app()->getLocale()) === 'ar' ? 'ar' : 'en';
+
+        return self::PER_UNIT_LABELS[$this->saleType()][$locale];
+    }
+
+    public function isSoldByBox(): bool
+    {
+        return $this->sale_type === 'box';
+    }
+
     public function isSoldByWeight(): bool
     {
         return $this->sale_type === 'weight';

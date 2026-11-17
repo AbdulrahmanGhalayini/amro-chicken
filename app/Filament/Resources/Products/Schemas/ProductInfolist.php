@@ -40,9 +40,11 @@ class ProductInfolist
                 TextEntry::make('sale_type')
                     ->label('Sold by')
                     ->badge()
-                    ->formatStateUsing(fn ($state, $record) => $state === 'weight'
-                        ? 'Kilogram (' . implode(', ', $record->getWeightChoices()) . ' kg)'
-                        : 'Quantity'),
+                    ->formatStateUsing(fn ($state, $record) => match ($state) {
+                        'weight' => 'Kilogram (' . implode(', ', $record->getWeightChoices()) . ' kg)',
+                        'box' => 'Box',
+                        default => 'Piece',
+                    }),
                 TextEntry::make('price')
                 ->formatStateUsing(function ($state) {
                     if ($state === null) return null;

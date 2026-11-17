@@ -225,9 +225,7 @@ if($business->use_rate==1) {
                                                     {{ $product->price }} {{ $business->currency }}
                                                 @endif
                                             @endif
-                                            @if($product->isSoldByWeight())
-                                                <span class="per_kg_label">{{ app()->getLocale() == 'ar' ? 'للكيلو' : '/ kg' }}</span>
-                                            @endif
+                                            <span class="per_kg_label">{{ $product->perUnitLabel() }}</span>
                                         </div>
                                         @if($product->garnishes->isNotEmpty())
                                             <div class="garnish_btn" id="garnish-btn-{{ $product->id }}" onclick="toggleGarnish({{ $product->id }})">
@@ -281,7 +279,7 @@ if($business->use_rate==1) {
                                             @endforeach
                                         </div>
                                     @endif
-                                    <svg class="add_to_cart_btn" id="add-to-cart-{{ $product->id }}" onclick="addToCart({{ $product->id }}, @js($product->name), @js((string) $product->price), @js($product->sale_type ?? 'unit'))" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 32 32"><path fill="#fff" d="M28.778 5H29c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1c0 .415.256.772.617.923L26.34 6H5.2C3.44 6 2 7.432 2 9.253l.52 8.495c.15 2.517 2.52 3.84 4.65 4.009l14.832 1.169c-.028.476.303.928.802 1.045c.572.131 1.144-.193 1.282-.74l1.064-4.134c1.068.334 1.863 1.489 1.863 2.788V22c0 1.608-1.204 3-2.635 3H3c-.547 0-1 .382-1 .956S2.447 27 2.994 27H5.5a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3h18a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3h.919C26.943 27 29 24.756 29 22v-.115c0-2.268-1.424-4.18-3.351-4.728zm-7.162 11H20v-4h2.605zm1.236-5H20V8.007l1.95.002c.84 0 1.45.776 1.25 1.582zM19 8.006V11h-4.38V8zm-5.38-.007V11h-4.6V7.994zm-5.6-.006V11H4.111L4 9.193c0-.666.54-1.204 1.21-1.204zM4.173 12H8.02v4h-3.6zm.308 5H8.02v2.83l-.68-.053c-1.34-.11-2.74-.875-2.82-2.149zm4.539 2.91V17h4.6v3.272zm5.6.44V17H19v3.62q0 .039.006.076zm5.38.25V17h1.369l-.679 2.747a1.28 1.28 0 0 1-.69.853M14.62 12H19v4h-4.38zm-5.6 0h4.6v4h-4.6z" stroke-width="1" stroke="#fff"/></svg>
+                                    <svg class="add_to_cart_btn" id="add-to-cart-{{ $product->id }}" onclick="addToCart({{ $product->id }}, @js($product->name), @js((string) $product->price), @js($product->saleType()))" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 32 32"><path fill="#fff" d="M28.778 5H29c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1c0 .415.256.772.617.923L26.34 6H5.2C3.44 6 2 7.432 2 9.253l.52 8.495c.15 2.517 2.52 3.84 4.65 4.009l14.832 1.169c-.028.476.303.928.802 1.045c.572.131 1.144-.193 1.282-.74l1.064-4.134c1.068.334 1.863 1.489 1.863 2.788V22c0 1.608-1.204 3-2.635 3H3c-.547 0-1 .382-1 .956S2.447 27 2.994 27H5.5a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3h18a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3h.919C26.943 27 29 24.756 29 22v-.115c0-2.268-1.424-4.18-3.351-4.728zm-7.162 11H20v-4h2.605zm1.236-5H20V8.007l1.95.002c.84 0 1.45.776 1.25 1.582zM19 8.006V11h-4.38V8zm-5.38-.007V11h-4.6V7.994zm-5.6-.006V11H4.111L4 9.193c0-.666.54-1.204 1.21-1.204zM4.173 12H8.02v4h-3.6zm.308 5H8.02v2.83l-.68-.053c-1.34-.11-2.74-.875-2.82-2.149zm4.539 2.91V17h4.6v3.272zm5.6.44V17H19v3.62q0 .039.006.076zm5.38.25V17h1.369l-.679 2.747a1.28 1.28 0 0 1-.69.853M14.62 12H19v4h-4.38zm-5.6 0h4.6v4h-4.6z" stroke-width="1" stroke="#fff"/></svg>
                                 </div>
                             @endforeach
                         </div>
@@ -690,6 +688,9 @@ if($business->use_rate==1) {
 
     // ---- Weight (kg) support ----
     const kgLabel = lang == 'ar' ? 'كغ' : 'kg';
+    // Unit names for lines sold by count
+    const unitLabels = @js(collect(\App\Models\Product::UNIT_LABELS)->map(fn ($l) => $l[app()->getLocale() == 'ar' ? 'ar' : 'en']));
+    const unitLabelAr = @js(collect(\App\Models\Product::UNIT_LABELS)->map(fn ($l) => $l['ar']));
     const selectedWeights = {};
     const WEIGHT_STEP = 0.25;
     const MAX_WEIGHT = 100;
@@ -841,7 +842,7 @@ if($business->use_rate==1) {
                 item_id: productId,
                 item_name: productName,
                 item_price: productPrice,
-                item_unit: isWeight ? 'kg' : 'unit',
+                item_unit: isWeight ? 'kg' : (saleType === 'box' ? 'box' : 'unit'),
                 item_weight: weight,
                 item_count: 1,
                 item_note: ""
@@ -921,7 +922,7 @@ if($business->use_rate==1) {
                         <p class="cart_item_name">${escapeHtml(item.item_name)}</p>
                         ${item.item_unit === 'kg'
                             ? `<p class="cart_item_price">{{ app()->getLocale() == 'ar' ? 'السعر' : 'Price' }}:  ${formatWeight(item.item_weight)} * ${formatPrice(item.item_price)} ${getCurrency()} / ${kgLabel}</p>`
-                            : `<p class="cart_item_price">{{ app()->getLocale() == 'ar' ? 'السعر' : 'Price' }}:  ${item.item_count} * ${formatPrice(unitPrice)} ${getCurrency()}</p>`}
+                            : `<p class="cart_item_price">{{ app()->getLocale() == 'ar' ? 'السعر' : 'Price' }}:  ${item.item_count} ${unitLabels[item.item_unit] || ''} * ${formatPrice(unitPrice)} ${getCurrency()}</p>`}
                         <div class="cart_item_total">{{ app()->getLocale() == 'ar' ? 'المجموع' : 'Total' }}: ${new Intl.NumberFormat('en-US', { minimumFractionDigits: rate == 1 ? 2 : 0, maximumFractionDigits: rate == 1 ? 2 : 0 }).format(itemTotal)} ${getCurrency()}</div>
                     </div>
                 </div>
@@ -932,7 +933,7 @@ if($business->use_rate==1) {
                     <button class="qty_btn" onclick="decreaseQty('${item.item_key}')">-</button>
                     ${item.item_unit === 'kg'
                         ? `<span class="qty_display weight_qty"><input type="text" inputmode="decimal" class="cart_weight_input" value="${roundWeight(parseFloat(item.item_weight))}" aria-label="{{ app()->getLocale() == 'ar' ? 'الوزن بالكيلو' : 'Weight in kg' }}" onchange="updateWeight('${item.item_key}', this.value)" onkeydown="if(event.key==='Enter'){this.blur();}"> ${kgLabel}</span>`
-                        : `<span class="qty_display">${item.item_count}</span>`}
+                        : `<span class="qty_display weight_qty">${item.item_count} <small>${unitLabels[item.item_unit] || ''}</small></span>`}
                     <button class="qty_btn" onclick="increaseQty('${item.item_key}')">+</button>
                 </div>
             `;
@@ -1033,7 +1034,7 @@ if($business->use_rate==1) {
                     if (item.item_unit === 'kg') {
                         whatsappMessage += item.item_name + '  وزن ' + formatWeight(item.item_weight) + '\n';
                     } else {
-                        whatsappMessage += item.item_name + '  عدد ' + item.item_count + '\n';
+                        whatsappMessage += item.item_name + '  عدد ' + item.item_count + ' ' + (unitLabelAr[item.item_unit] || '') + '\n';
                     }
                     if(item.item_note){
                         whatsappMessage += '*ملاحظة: ' + item.item_note + '* \n\n';
