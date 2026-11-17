@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Amro Chicken'),
 
     /*
     | Slug of the store whose menu is shown at "/" (single-store install).

@@ -30,7 +30,7 @@ reference menu (products shown with "1 كيلو" there are imported as sold by w
 
 Product images are referenced as `products/<file>.jpg` with thumbnails in `thumbnail/products/`, the same layout as
 QREXE. Copy those two folders (and `businesses/`) from the QREXE `storage/app/public` into this app's
-`storage/app/public`.
+`storage/app/public`. They are served at `/media/...`.
 
 ## Setup
 
@@ -41,7 +41,8 @@ php artisan key:generate
 php artisan migrate --force
 php artisan shield:generate --all --panel=admin --option=permissions
 php artisan db:seed --force
-php artisan storage:link
+php artisan storage:link        # public files are served from /media (the host blocks /storage)
+php artisan vendor:publish --tag=livewire:assets --force   # host doesn't route /livewire/*.js to PHP
 ```
 
 The web root must point to `public/`.
