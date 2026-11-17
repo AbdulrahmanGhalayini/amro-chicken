@@ -43,4 +43,17 @@ class ExampleTest extends TestCase
         $this->assertTrue($p->isSoldByWeight());
         $this->assertFalse((new Product())->isSoldByWeight());
     }
+
+    public function test_admin_can_open_panel_in_production(): void
+    {
+        $this->app->detectEnvironment(fn () => 'production');
+        $role = \Spatie\Permission\Models\Role::create(['name' => 'super_admin', 'guard_name' => 'web']);
+        $admin = \App\Models\User::factory()->create();
+        $admin->assignRole($role);
+        $nobody = \App\Models\User::factory()->create();
+
+        $this->assertTrue($admin->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')));
+        $this->assertFalse($nobody->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')));
+        $this->actingAs($nobody)->get('/admin')->assertForbidden();
+    }
 }
