@@ -45,3 +45,6 @@ php artisan storage:link
 ```
 
 The web root must point to `public/`.
+
+On hosting where `.env` can't be edited directly, the app key can live in `storage/app/app_key`
+(one line, `base64:...`; git-ignored) and `APP_URL` defaults to `https://amro-chicken.algorexe.com`.

@@ -57,7 +57,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://amro-chicken.algorexe.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -102,7 +102,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY') ?: (is_file(storage_path('app/app_key')) ? trim(file_get_contents(storage_path('app/app_key'))) : null),
 
     'previous_keys' => [
         ...array_filter(
