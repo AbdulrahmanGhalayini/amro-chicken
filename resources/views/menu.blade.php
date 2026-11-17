@@ -76,6 +76,15 @@ body.rtl .weight_picker { flex-direction: row-reverse; }
 }
 .weight_chip.active { background: var(--theme-color); color: #fff; }
 .cart_item_weight { font-size: 13px; color: #555; }
+.weight_custom { display: inline-flex; align-items: center; gap: 4px; }
+.weight_input {
+    width: 72px; padding: 4px 8px; font-size: 14px; font-family: inherit;
+    border: 1px solid var(--theme-color); border-radius: 999px; text-align: center; direction: ltr;
+}
+.weight_input.invalid { border-color: #e00; background: #fff0f0; }
+.weight_unit { font-size: 13px; color: #555; }
+.qty_display.weight_qty { display: inline-flex; align-items: center; gap: 4px; width: auto; min-width: 0; white-space: nowrap; }
+.cart_weight_input { width: 70px; padding: 4px 6px; font-size: 15px; font-family: inherit; text-align: center; border: 1px solid #ccc; border-radius: 6px; direction: ltr; }
 </style>
 </head>
 @php
@@ -243,6 +252,10 @@ if($business->use_rate==1) {
                                                     {{ rtrim(rtrim(number_format($w, 3, '.', ''), '0'), '.') }} {{ app()->getLocale() == 'ar' ? 'كغ' : 'kg' }}
                                                 </button>
                                             @endforeach
+                                            <span class="weight_custom">
+                                                <input type="text" inputmode="decimal" class="weight_input" id="weight-input-{{ $product->id }}" value="{{ rtrim(rtrim(number_format($defaultWeight, 2, '.', ''), '0'), '.') }}" placeholder="1.25" aria-label="{{ app()->getLocale() == 'ar' ? 'الوزن بالكيلو' : 'Weight in kg' }}" oninput="typeWeight({{ $product->id }}, this)">
+                                                <span class="weight_unit">{{ app()->getLocale() == 'ar' ? 'كغ' : 'kg' }}</span>
+                                            </span>
                                         </div>
                                     @endif
                                     @if($product->garnishes->isNotEmpty())
@@ -678,22 +691,51 @@ if($business->use_rate==1) {
     // ---- Weight (kg) support ----
     const kgLabel = lang == 'ar' ? 'كغ' : 'kg';
     const selectedWeights = {};
-    const formatWeight = (w) => {
-        const n = parseFloat(w);
-        return (Math.round(n * 1000) / 1000).toString() + ' ' + kgLabel;
+    const WEIGHT_STEP = 0.25;
+    const MAX_WEIGHT = 100;
+    const roundWeight = (n) => Math.round(n * 100) / 100;
+    // Accepts "1.25", "1,25", ".5" ... returns a weight rounded to 2 decimals, or null
+    const parseWeight = (value) => {
+        const str = String(value ?? '').trim().replace(/[٫,]/g, '.')
+            .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+        if (!/^\d*\.?\d+$|^\d+\.$/.test(str)) return null;
+        const n = roundWeight(parseFloat(str));
+        return (n > 0 && n <= MAX_WEIGHT) ? n : null;
     };
+    const formatWeight = (w) => roundWeight(parseFloat(w)).toString() + ' ' + kgLabel;
     const getSelectedWeight = (productId) => {
+        const input = document.getElementById('weight-input-' + productId);
+        if (input) return parseWeight(input.value);
         if (selectedWeights[productId]) return selectedWeights[productId];
         const picker = document.getElementById('weight-picker-' + productId);
         return picker ? parseFloat(picker.dataset.default) : 1;
     };
-    const selectWeight = (productId, weight, el) => {
-        selectedWeights[productId] = parseFloat(weight);
+    const markChip = (productId, weight) => {
         const picker = document.getElementById('weight-picker-' + productId);
-        if (picker) {
-            picker.querySelectorAll('.weight_chip').forEach(c => c.classList.remove('active'));
-        }
-        if (el) el.classList.add('active');
+        if (!picker) return;
+        picker.querySelectorAll('.weight_chip').forEach(c => {
+            c.classList.toggle('active', weight !== null && parseFloat(c.dataset.weight) === weight);
+        });
+    };
+    const selectWeight = (productId, weight, el) => {
+        const w = roundWeight(parseFloat(weight));
+        selectedWeights[productId] = w;
+        const input = document.getElementById('weight-input-' + productId);
+        if (input) { input.value = w; input.classList.remove('invalid'); }
+        markChip(productId, w);
+    };
+    const typeWeight = (productId, input) => {
+        const w = parseWeight(input.value);
+        input.classList.toggle('invalid', input.value.trim() !== '' && w === null);
+        if (w !== null) selectedWeights[productId] = w;
+        markChip(productId, w);
+    };
+    // Number of "pieces" shown on the cart badge: a weight line counts as 1
+    const countCart = () => local_cart.cart_list.reduce((total, item) => total + (item.item_unit === 'kg' ? 1 : item.item_count), 0);
+    const refreshCartCount = () => {
+        cart_count = countCart();
+        setCookie('local_cart', local_cart);
+        document.getElementById('cart_count_number').textContent = cart_count;
     };
     // Unit price of one cart line (price per kg x weight for weight items)
     const lineUnitPrice = (item) => {
@@ -719,11 +761,24 @@ if($business->use_rate==1) {
             // Cart exists and belongs to this business
             local_cart = savedCart;
             // Older carts had no line key: one line per product
+            const merged = [];
             local_cart.cart_list.forEach(item => {
-                if (!item.item_key) item.item_key = String(item.item_id);
                 if (!item.item_unit) item.item_unit = 'unit';
+                if (item.item_unit === 'kg') {
+                    // One line per weight product; its weight holds the whole amount
+                    const total = roundWeight(parseFloat(item.item_weight || 1) * (item.item_count || 1));
+                    item.item_key = item.item_id + '_kg';
+                    const prev = merged.find(m => m.item_key === item.item_key);
+                    if (prev) { prev.item_weight = roundWeight(prev.item_weight + total); return; }
+                    item.item_weight = total;
+                    item.item_count = 1;
+                } else if (!item.item_key) {
+                    item.item_key = String(item.item_id);
+                }
+                merged.push(item);
             });
-            cart_count = local_cart.cart_list.reduce((total, item) => total + item.item_count, 0);
+            local_cart.cart_list = merged;
+            cart_count = countCart();
             // add active to cart btns
             local_cart.cart_list.forEach(item => {
                 const btn = document.getElementById('add-to-cart-' + item.item_id);
@@ -751,7 +806,12 @@ if($business->use_rate==1) {
     const addToCart = (productId, productName, productPrice, saleType = 'unit') => {
         const isWeight = saleType === 'weight';
         const weight = isWeight ? getSelectedWeight(productId) : null;
-        const itemKey = isWeight ? productId + '_' + weight : String(productId);
+        if (isWeight && weight === null) {
+            const input = document.getElementById('weight-input-' + productId);
+            if (input) { input.classList.add('invalid'); input.focus(); }
+            return;
+        }
+        const itemKey = isWeight ? productId + '_kg' : String(productId);
         const existingItem = findItem(itemKey);
         
         // Add animation to the button
@@ -768,7 +828,10 @@ if($business->use_rate==1) {
             cartCountBtn.classList.remove('pulse');
         }, 3000);
         
-        if (existingItem) {
+        if (existingItem && isWeight) {
+            // Same product again: add the chosen weight to its line
+            existingItem.item_weight = Math.min(MAX_WEIGHT, roundWeight(parseFloat(existingItem.item_weight) + weight));
+        } else if (existingItem) {
             // Item exists, increment count
             existingItem.item_count++;
         } else {
@@ -786,14 +849,7 @@ if($business->use_rate==1) {
 
         }
         
-        // Update cart count
-        cart_count = local_cart.cart_list.reduce((total, item) => total + item.item_count, 0);
-        
-        // Save to cookie
-        setCookie('local_cart', local_cart);
-        
-        // Update UI
-        document.getElementById('cart_count_number').textContent = cart_count;
+        refreshCartCount();
     };
     
     // Show cart contents
@@ -863,8 +919,9 @@ if($business->use_rate==1) {
                 <div class="cart_item_header">
                     <div class="cart_item_info l">
                         <p class="cart_item_name">${escapeHtml(item.item_name)}</p>
-                        ${item.item_unit === 'kg' ? `<p class="cart_item_weight">{{ app()->getLocale() == 'ar' ? 'الوزن' : 'Weight' }}: ${formatWeight(item.item_weight)} &nbsp;·&nbsp; ${formatPrice(item.item_price)} ${getCurrency()} / ${kgLabel}</p>` : ''}
-                        <p class="cart_item_price">{{ app()->getLocale() == 'ar' ? 'السعر' : 'Price' }}:  ${item.item_count} * ${formatPrice(unitPrice)} ${getCurrency()}</p>
+                        ${item.item_unit === 'kg'
+                            ? `<p class="cart_item_price">{{ app()->getLocale() == 'ar' ? 'السعر' : 'Price' }}:  ${formatWeight(item.item_weight)} * ${formatPrice(item.item_price)} ${getCurrency()} / ${kgLabel}</p>`
+                            : `<p class="cart_item_price">{{ app()->getLocale() == 'ar' ? 'السعر' : 'Price' }}:  ${item.item_count} * ${formatPrice(unitPrice)} ${getCurrency()}</p>`}
                         <div class="cart_item_total">{{ app()->getLocale() == 'ar' ? 'المجموع' : 'Total' }}: ${new Intl.NumberFormat('en-US', { minimumFractionDigits: rate == 1 ? 2 : 0, maximumFractionDigits: rate == 1 ? 2 : 0 }).format(itemTotal)} ${getCurrency()}</div>
                     </div>
                 </div>
@@ -873,7 +930,9 @@ if($business->use_rate==1) {
                 </div>
                 <div class="cart_item_controls">
                     <button class="qty_btn" onclick="decreaseQty('${item.item_key}')">-</button>
-                    <span class="qty_display">${item.item_count}</span>
+                    ${item.item_unit === 'kg'
+                        ? `<span class="qty_display weight_qty"><input type="text" inputmode="decimal" class="cart_weight_input" value="${roundWeight(parseFloat(item.item_weight))}" aria-label="{{ app()->getLocale() == 'ar' ? 'الوزن بالكيلو' : 'Weight in kg' }}" onchange="updateWeight('${item.item_key}', this.value)" onkeydown="if(event.key==='Enter'){this.blur();}"> ${kgLabel}</span>`
+                        : `<span class="qty_display">${item.item_count}</span>`}
                     <button class="qty_btn" onclick="increaseQty('${item.item_key}')">+</button>
                 </div>
             `;
@@ -899,13 +958,27 @@ if($business->use_rate==1) {
         }
     };
     
+    // Set the weight of a cart line from the typed value (e.g. 1.25)
+    const updateWeight = (itemKey, value) => {
+        const item = findItem(itemKey);
+        if (!item) return;
+        const w = parseWeight(value);
+        if (w !== null) {
+            item.item_weight = w;
+            refreshCartCount();
+        }
+        renderCart();
+    };
+
     const increaseQty = (itemKey) => {
         const item = findItem(itemKey);
         if (item) {
-            item.item_count++;
-            cart_count = local_cart.cart_list.reduce((total, item) => total + item.item_count, 0);
-            setCookie('local_cart', local_cart);
-            document.getElementById('cart_count_number').textContent = cart_count;
+            if (item.item_unit === 'kg') {
+                item.item_weight = Math.min(MAX_WEIGHT, roundWeight(parseFloat(item.item_weight) + WEIGHT_STEP));
+            } else {
+                item.item_count++;
+            }
+            refreshCartCount();
             renderCart();
         }
     };
@@ -914,16 +987,16 @@ if($business->use_rate==1) {
     const decreaseQty = (itemKey) => {
         const item = findItem(itemKey);
         if (item) {
-            if (item.item_count > 1) {
+            if (item.item_unit === 'kg' && roundWeight(parseFloat(item.item_weight) - WEIGHT_STEP) > 0) {
+                item.item_weight = roundWeight(parseFloat(item.item_weight) - WEIGHT_STEP);
+            } else if (item.item_unit !== 'kg' && item.item_count > 1) {
                 item.item_count--;
             } else {
                 // Remove line if quantity becomes 0
                 local_cart.cart_list = local_cart.cart_list.filter(i => i.item_key !== itemKey);
                 updateCartButtonState(item.item_id);
             }
-            cart_count = local_cart.cart_list.reduce((total, item) => total + item.item_count, 0);
-            setCookie('local_cart', local_cart);
-            document.getElementById('cart_count_number').textContent = cart_count;
+            refreshCartCount();
             renderCart();
         }
     };
@@ -958,7 +1031,7 @@ if($business->use_rate==1) {
                     var item = local_cart.cart_list[i];
                     const itemPrice = formatCartPrice(lineUnitPrice(item));
                     if (item.item_unit === 'kg') {
-                        whatsappMessage += item.item_name + '  وزن ' + formatWeight(item.item_weight) + '  عدد ' + item.item_count + '\n';
+                        whatsappMessage += item.item_name + '  وزن ' + formatWeight(item.item_weight) + '\n';
                     } else {
                         whatsappMessage += item.item_name + '  عدد ' + item.item_count + '\n';
                     }

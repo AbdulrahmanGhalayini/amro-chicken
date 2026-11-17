@@ -42,10 +42,14 @@ php artisan migrate --force
 php artisan shield:generate --all --panel=admin --option=permissions
 php artisan db:seed --force
 php artisan storage:link        # public files are served from /media (the host blocks /storage)
-php artisan vendor:publish --tag=livewire:assets --force   # host doesn't route /livewire/*.js to PHP
 ```
 
 The web root must point to `public/`.
+
+Livewire's script is served as a static file from `public/livewire/livewire.min.js`, because this
+host serves any URL ending in `.js` as a file and never passes it to PHP, and it blocks `/vendor/*`.
+`composer install` copies the file there (see `post-autoload-dump` in `composer.json`). Do not run
+`vendor:publish --tag=livewire:assets`: it makes Livewire point at `/vendor/livewire/...`, which is blocked.
 
 On hosting where `.env` can't be edited directly, the app key can live in `storage/app/app_key`
 (one line, `base64:...`; git-ignored) and `APP_URL` defaults to `https://amro-chicken.algorexe.com`.

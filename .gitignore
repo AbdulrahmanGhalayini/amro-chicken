@@ -18,6 +18,7 @@
 /public/storage
 /public/media
 /public/vendor/livewire
+/public/livewire
 /storage/*.key
 /storage/pail
 /vendor
