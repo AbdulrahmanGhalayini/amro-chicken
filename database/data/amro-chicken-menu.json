@@ -1,0 +1,1113 @@
+{
+  "business": {
+    "slug": "amro-chicken",
+    "language": "ar",
+    "currency": "LL",
+    "name_ar": "عمرو تشكن",
+    "name_en": "Amro Chicken",
+    "slogan_ar": "لقمة هنية من ٢٠ سنة لهلا",
+    "location_ar": "طرابلس أبي سمراء مقابل سناك عمرو",
+    "location_url": "https://maps.app.goo.gl/e3TDRrThb2e8nck39",
+    "phone": "9616448497",
+    "whatsapp": "96176797132",
+    "theme_color": "#c0392b",
+    "profile_photo": "businesses/01KPN3WDE9C8N6EZNNVT7873QC.png",
+    "cover_photo": "businesses/01KPN3WDE9C8N6EZNNVT7873QC.png",
+    "use_rate": false,
+    "rate": null
+  },
+  "categories": [
+    {
+      "name_ar": "عجين",
+      "name_en": "Dough",
+      "products": [
+        {
+          "name_ar": "سمبوسك لحمة",
+          "name_en": null,
+          "price": 490000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4WEQQ5JSNQBHEDJAX5ZM87.jpg"
+        },
+        {
+          "name_ar": "عجينة بيتزا",
+          "name_en": null,
+          "price": 180000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "عجينة شيش برك",
+          "name_en": null,
+          "price": 195000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "شيش برك",
+          "name_en": null,
+          "price": 400000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4WJZAYQMTW0AMR4QKRDSNV.jpg"
+        },
+        {
+          "name_ar": "لحمة بعجين",
+          "name_en": null,
+          "price": 100000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4WMN8J5HAC1EV6G7X3BFSY.jpg"
+        },
+        {
+          "name_ar": "سمبوسك جبنة",
+          "name_en": null,
+          "price": 355000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQA2BRAJXR18EY2CNPGC5J00.jpg"
+        },
+        {
+          "name_ar": "رقائق جبنة",
+          "name_en": null,
+          "price": 355000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4Z4Z7YEB3ZP893QM79TKWC.jpg"
+        }
+      ]
+    },
+    {
+      "name_ar": "سلطات",
+      "name_en": "Salads",
+      "products": [
+        {
+          "name_ar": "فتوش",
+          "name_en": null,
+          "price": 350000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4Z26BZ35EDG0J204XT0MVD.jpg"
+        },
+        {
+          "name_ar": "تبولة",
+          "name_en": null,
+          "price": 300000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4Z331KM7GZ8N71EZWWV0DY.jpg"
+        }
+      ]
+    },
+    {
+      "name_ar": "طبخ",
+      "name_en": "Cooked Dishes",
+      "products": [
+        {
+          "name_ar": "مسقعة لحمة",
+          "name_en": null,
+          "price": 1100000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQA34Q7M7B95D0HJYADD6RJ6.jpg"
+        },
+        {
+          "name_ar": "كفتة بالصينية",
+          "name_en": null,
+          "price": 1000000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQA371NS9RJSD4121KDMKRZM.jpg"
+        }
+      ]
+    },
+    {
+      "name_ar": "دجاج ني",
+      "name_en": "Raw Chicken",
+      "products": [
+        {
+          "name_ar": "جوانح",
+          "name_en": null,
+          "price": 280000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ54YZ2XM9H6HV5TPBSNENBP.jpg"
+        },
+        {
+          "name_ar": "جوانح متبلة",
+          "name_en": null,
+          "price": 380000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQA5XSTEZEKGBMZS5598290E.jpg"
+        },
+        {
+          "name_ar": "فخاذ متبل",
+          "name_en": null,
+          "price": 380000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9BMB34CP48AN5STP0TD7MQ.jpg"
+        },
+        {
+          "name_ar": "فخاذ",
+          "name_en": null,
+          "price": 280000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQA6DT0R48HDSZW0HZGXS4MA.jpg"
+        },
+        {
+          "name_ar": "دبوس",
+          "name_en": null,
+          "price": 420000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ4YFXY7VXGQY08CWTZENX1J.jpg"
+        },
+        {
+          "name_ar": "دبوس متبل",
+          "name_en": null,
+          "price": 520000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9BAT36ZN7T9SKMXYV8H4A2.jpg"
+        },
+        {
+          "name_ar": "سفاين بعظم",
+          "name_en": null,
+          "price": 620000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9BBX8RPXBVQN7YN7SV99S9.jpg"
+        },
+        {
+          "name_ar": "مسحب",
+          "name_en": null,
+          "price": 720000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ4ZFEV4WZP3BTQRQGAGQWNA.jpg"
+        },
+        {
+          "name_ar": "سودة دجاج",
+          "name_en": null,
+          "price": 440000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQA30989ZDYG9EQZARJ4A41A.jpg"
+        },
+        {
+          "name_ar": "قوانص",
+          "name_en": null,
+          "price": 260000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQA2J9S3PCDDMEVMA5B6CHR8.jpg"
+        },
+        {
+          "name_ar": "فروج كامل",
+          "name_en": null,
+          "price": 380000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQA2KPXTBTKD4VF01VEE5ZJD.jpg"
+        },
+        {
+          "name_ar": "رقابي",
+          "name_en": null,
+          "price": 60000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KME7HFWQ49W4PQEF6CD17KCR.jpg"
+        }
+      ]
+    },
+    {
+      "name_ar": "دجاج مصنع",
+      "name_en": "Processed Chicken",
+      "products": [
+        {
+          "name_ar": "تشكن بوبكورن",
+          "name_en": null,
+          "price": 820000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9C4N8XKSB56V84JXVRMYFA.jpg"
+        },
+        {
+          "name_ar": "اسكالوب مطحون",
+          "name_en": null,
+          "price": 640000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9C5HDFWPYCFRY8AKJ13553.jpg"
+        },
+        {
+          "name_ar": "اسكالوب شرحات",
+          "name_en": null,
+          "price": 850000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9C65F46QAZJ7H3KA2HB2VR.jpg"
+        },
+        {
+          "name_ar": "برغر دجاج",
+          "name_en": null,
+          "price": 640000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ4W62ZXRFMVS2WHQ9X95XXZ.jpg"
+        },
+        {
+          "name_ar": "بفتاك دجاج",
+          "name_en": null,
+          "price": 840000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9C86KTZ6HQ8RYXGN7RWYBG.jpg"
+        },
+        {
+          "name_ar": "شاورما دجاج",
+          "name_en": null,
+          "price": 840000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ5B906EGMNR599MZPZYFWGK.jpg"
+        },
+        {
+          "name_ar": "كفتة دجاج",
+          "name_en": null,
+          "price": 640000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9C9J11XMBSAY4FGN0DMCVB.jpg"
+        },
+        {
+          "name_ar": "ناغتس",
+          "name_en": null,
+          "price": 756500,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ4YK7MY72DY04JMQXNH2W6Q.jpg"
+        },
+        {
+          "name_ar": "كوردون بلو",
+          "name_en": null,
+          "price": 870000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9CCBTR5H22SVW9PAJG8ZEK.jpg"
+        },
+        {
+          "name_ar": "طاووق",
+          "name_en": null,
+          "price": 840000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ54BAWH3GVQE2TG0EAN8X0H.jpg"
+        },
+        {
+          "name_ar": "فاهيتا",
+          "name_en": null,
+          "price": 840000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ5B6H789BR3BPZKY3J13TTK.jpg"
+        },
+        {
+          "name_ar": "كرسبي",
+          "name_en": null,
+          "price": 940000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ54A01NK0WG17F2VDBVGDMN.jpg"
+        },
+        {
+          "name_ar": "نقانق دجاج",
+          "name_en": null,
+          "price": 740000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9CH37BCZD3G7X4MA5W1ATQ.jpg"
+        },
+        {
+          "name_ar": "تندر تشكن",
+          "name_en": null,
+          "price": 755000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "زنجر",
+          "name_en": null,
+          "price": 1335000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        }
+      ]
+    },
+    {
+      "name_ar": "لحم غنم ني",
+      "name_en": "Raw Lamb",
+      "products": [
+        {
+          "name_ar": "عص عنم",
+          "name_en": null,
+          "price": 1500000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "نخاع غنم",
+          "name_en": null,
+          "price": 300000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "غنم بعظمه",
+          "name_en": null,
+          "price": 1700000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4YQ5319GBR4CT3V9EGDW77.jpg"
+        },
+        {
+          "name_ar": "لحمة للسبانغ غنم",
+          "name_en": null,
+          "price": 2100000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9D0BJ9MNJ022JWZKYSGHXM.jpg"
+        },
+        {
+          "name_ar": "لحم موزات غنم",
+          "name_en": null,
+          "price": 2100000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ4YY4DJTQVY8AYWX9E5HR8D.jpg"
+        },
+        {
+          "name_ar": "لحمة مفرومة غنم",
+          "name_en": null,
+          "price": 2100000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9D2T9SGTQAGD0PHBP60ER8.jpg"
+        },
+        {
+          "name_ar": "لحم كفتة غنم",
+          "name_en": null,
+          "price": 2100000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9D3GFA0SFGEQF58KRKRNYA.jpg"
+        },
+        {
+          "name_ar": "لحم كبة غنم",
+          "name_en": null,
+          "price": 2100000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9DB3YQS8WV0GZ3VJAFMC6J.jpg"
+        },
+        {
+          "name_ar": "لحم شقف غنم",
+          "name_en": null,
+          "price": 2100000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9DEK3AMXBZJNCRVESW5SB1.jpg"
+        },
+        {
+          "name_ar": "لحم شرحة غنم",
+          "name_en": null,
+          "price": 2100000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9DF8QKZH090SR2DJRRDNK0.jpg"
+        },
+        {
+          "name_ar": "معلاق غنم",
+          "name_en": null,
+          "price": 1500000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQA2FPJN349MBR3ST58AD9WJ.jpg"
+        }
+      ]
+    },
+    {
+      "name_ar": "لحم عجل ني",
+      "name_en": "Raw Veal",
+      "products": [
+        {
+          "name_ar": "عص عجل",
+          "name_en": null,
+          "price": 1300000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "فيليه عجل",
+          "name_en": null,
+          "price": 1800000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4YQY89E91WRW7SKX3YNZ16.jpg"
+        },
+        {
+          "name_ar": "برغر لحمة",
+          "name_en": null,
+          "price": 1300000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ4WSPA5EZPXW7PCMY8GAQQ8.jpg"
+        },
+        {
+          "name_ar": "بفتاك لحمة",
+          "name_en": null,
+          "price": 1600000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQA2Y8MM817SMKWZPZDD05XZ.jpg"
+        },
+        {
+          "name_ar": "شقف عجل",
+          "name_en": null,
+          "price": 1500000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ4YHHT2ASZMKE8GDA29666Z.jpg"
+        },
+        {
+          "name_ar": "لحمة مفرومة",
+          "name_en": null,
+          "price": 1500000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ4YSK69J2Q3BXYSPNMBRYDR.jpg"
+        },
+        {
+          "name_ar": "لحمة للسبانغ عجل",
+          "name_en": null,
+          "price": 1500000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9E8VPFN8VZTE8N78A48XC9.jpg"
+        },
+        {
+          "name_ar": "كفتة مشكلة غنم وعجل",
+          "name_en": null,
+          "price": 1750000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ4YE3WGJWPKBF46N9Q7HBQ1.jpg"
+        },
+        {
+          "name_ar": "كفتة عجل",
+          "name_en": null,
+          "price": 1500000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQA3BSPHR7VKATFRZDW4XQ5W.jpg"
+        },
+        {
+          "name_ar": "لحم للصفايح",
+          "name_en": null,
+          "price": 1500000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9EB3M4T086EM45N98GMT9V.jpg"
+        },
+        {
+          "name_ar": "نقانق لحمة",
+          "name_en": null,
+          "price": 1300000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ4YW0D6G4ZDCDGT9CFDJ1JF.jpg"
+        },
+        {
+          "name_ar": "موزات عجل",
+          "name_en": null,
+          "price": 1500000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9EFQZYSWVD1ZSGV3TDM7DB.jpg"
+        },
+        {
+          "name_ar": "كبة مدقوقة",
+          "name_en": null,
+          "price": 1500000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9EHV7PMV7984MY699FRM4W.jpg"
+        },
+        {
+          "name_ar": "كبة على المكنة",
+          "name_en": null,
+          "price": 1500000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9EKY00X8VQ1BXW6X382DEX.jpg"
+        },
+        {
+          "name_ar": "صحن كبة",
+          "name_en": null,
+          "price": 400000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ552N0H4C7HJDAMZ5A9E3N6.jpg"
+        },
+        {
+          "name_ar": "شرحة عجل",
+          "name_en": null,
+          "price": 1500000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9EQ5RA25K9V7N6SRMFD3XR.jpg"
+        },
+        {
+          "name_ar": "شحمة",
+          "name_en": null,
+          "price": 300000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9ER6HBQHE02DYSBBF77HM2.jpg"
+        },
+        {
+          "name_ar": "شاورما لحمة",
+          "name_en": null,
+          "price": 1600000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KK9ESMDNVQ87HB71728GHTZX.jpg"
+        },
+        {
+          "name_ar": "سجق",
+          "name_en": null,
+          "price": 1300000,
+          "sale_type": "weight",
+          "weight_options": [
+            0.2,
+            0.5,
+            1
+          ],
+          "image_1": "products/01KQ4WPS69V6FT80YMS64GQZWZ.jpg"
+        }
+      ]
+    },
+    {
+      "name_ar": "مشاوي",
+      "name_en": "Grills",
+      "products": [
+        {
+          "name_ar": "كبة مشوية بلحمة",
+          "name_en": null,
+          "price": 170000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4XWT5H7ASANGFXZ33KPXV0.jpg"
+        },
+        {
+          "name_ar": "كبة مشوية بشحمة",
+          "name_en": null,
+          "price": 130000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4XXQY980KVTQED9F9CTYBX.jpg"
+        },
+        {
+          "name_ar": "كبة مشوية بلحمة وشحمة",
+          "name_en": null,
+          "price": 150000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4XYY9NBKM04K94FXTC0NDQ.jpg"
+        },
+        {
+          "name_ar": "مشكل مشاوي",
+          "name_en": null,
+          "price": 1900000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4YZJ9N1N8HJXEY903HC7FM.jpg"
+        },
+        {
+          "name_ar": "جوانح مشوية",
+          "name_en": null,
+          "price": 770000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQA30EK6G6GTXQPDRP11WB8C.jpg"
+        },
+        {
+          "name_ar": "فخاذ مشوية",
+          "name_en": null,
+          "price": 770000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "سجق مشوي",
+          "name_en": null,
+          "price": 1700000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME7VJZZH7JC2XRGSB7Z32Y5.jpg"
+        },
+        {
+          "name_ar": "كفتة عجل مشوية",
+          "name_en": null,
+          "price": 1900000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME7YG8C5BDQFHBGH9J90ZE0.jpg"
+        },
+        {
+          "name_ar": "كفتة مشكلة مشوية",
+          "name_en": null,
+          "price": 2200000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME83GW21DK50PCKS5MW53R5.jpg"
+        },
+        {
+          "name_ar": "نقاق مشوية",
+          "name_en": null,
+          "price": 1700000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME88DBSWMSX24BNRTDQEDK0.jpg"
+        },
+        {
+          "name_ar": "شقف عجل مشوية",
+          "name_en": null,
+          "price": 1900000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME89BDWKR58MC49EQ96EKEK.jpg"
+        },
+        {
+          "name_ar": "شقف غنم مشوية",
+          "name_en": null,
+          "price": 2500000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8AE39NXHPC38A5NM5WS8N.jpg"
+        },
+        {
+          "name_ar": "كفتة غنم مشوية",
+          "name_en": null,
+          "price": 2500000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8BCS567KFD00FN59MPCHW.jpg"
+        },
+        {
+          "name_ar": "طاووق مشوي",
+          "name_en": null,
+          "price": 1220000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8C8MKQ1MR848XHS7ZTSPR.jpg"
+        }
+      ]
+    },
+    {
+      "name_ar": "أسماك",
+      "name_en": "Fish",
+      "products": [
+        {
+          "name_ar": "سمك عرموط",
+          "name_en": null,
+          "price": 500000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "قريدس صغير",
+          "name_en": null,
+          "price": 535000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "قريدس وسط",
+          "name_en": null,
+          "price": 665000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "قريدس كبير",
+          "name_en": null,
+          "price": 710000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "سمك فيليه سيبلو",
+          "name_en": null,
+          "price": 490000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8J71A5FAW1ZX80ER525DV.jpg"
+        },
+        {
+          "name_ar": null,
+          "name_en": "crub claws",
+          "price": 0,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8JYEPPDDVEQBK3WAZC1D0.jpg"
+        },
+        {
+          "name_ar": null,
+          "name_en": "Bread shrimps",
+          "price": 590000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8M21F90MD4P5KEMKVG3ZA.jpg"
+        },
+        {
+          "name_ar": null,
+          "name_en": "Fish nuggets",
+          "price": 490000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8MQ975YTP8YCKFDPTFDNK.jpg"
+        },
+        {
+          "name_ar": null,
+          "name_en": "Fish fingers",
+          "price": 310000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8NYPM2A4DBT3ZVRQSDHW5.jpg"
+        },
+        {
+          "name_ar": "علبة كالامار",
+          "name_en": null,
+          "price": 625000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8PSCHWVEN7MN5AJQ2CNGW.jpg"
+        }
+      ]
+    },
+    {
+      "name_ar": "مفرزات",
+      "name_en": "Frozen",
+      "products": [
+        {
+          "name_ar": "بطاطا ودجز",
+          "name_en": null,
+          "price": 355000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "بطاطا مفرزة",
+          "name_en": null,
+          "price": 185000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "ورق عنب لحمة",
+          "name_en": null,
+          "price": 1100000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4X5768R7JTM4EDF3QEFEJQ.jpg"
+        },
+        {
+          "name_ar": "ورق عنب بزيت",
+          "name_en": null,
+          "price": 750000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4X634NQVTPW6EVT0TXGKH6.jpg"
+        },
+        {
+          "name_ar": "ملفوف",
+          "name_en": null,
+          "price": 900000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4X9DJXXK5DAARFRY95B6N0.jpg"
+        },
+        {
+          "name_ar": "سلق مفرز",
+          "name_en": null,
+          "price": 900000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4XAG8V5E3W9V6P0HTP1711.jpg"
+        },
+        {
+          "name_ar": "سبانغ",
+          "name_en": null,
+          "price": 300000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": null
+        },
+        {
+          "name_ar": "كبة مقلية",
+          "name_en": null,
+          "price": 600000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4XFAKYBJFS7SQQ0HA2WBQ1.jpg"
+        },
+        {
+          "name_ar": "صينية كبة",
+          "name_en": null,
+          "price": 900000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KQ4XGHBGFZMXESE2RZWF8DJR.jpg"
+        },
+        {
+          "name_ar": "بامية",
+          "name_en": null,
+          "price": 300000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8ST0N3RYPN9G921D4CKTT.jpg"
+        },
+        {
+          "name_ar": "بازيلا وجزر",
+          "name_en": null,
+          "price": 267000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8TKBN2NR6KFRNABQR5ER1.jpg"
+        },
+        {
+          "name_ar": "بازيلا",
+          "name_en": null,
+          "price": 267000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8V8E0V8T9VJB9AJ9A1ERQ.jpg"
+        },
+        {
+          "name_ar": "صوص فاهيتا",
+          "name_en": null,
+          "price": 100000,
+          "sale_type": "unit",
+          "weight_options": null,
+          "image_1": "products/01KME8XERCR5RBV1WYA20SARA7.jpg"
+        }
+      ]
+    }
+  ]
+}
