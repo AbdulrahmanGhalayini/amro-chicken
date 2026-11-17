@@ -96,7 +96,7 @@ class ProductsTable
                     ->label('Sold by')
                     ->badge()
                     ->formatStateUsing(fn ($state, $record) => match ($state) {
-                        'weight' => 'Kg (' . implode(', ', $record->getWeightChoices()) . ')',
+                        'weight' => 'Kilogram',
                         'box' => 'Box',
                         default => 'Piece',
                     })

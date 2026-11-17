@@ -26,11 +26,12 @@ class ExampleTest extends TestCase
 
         $response = $this->get('/menu/amro-chicken')->assertOk();
         $response->assertSee('جوانح');
-        $response->assertSee('weight_chip', false);
+        // Every weight product gets a weight box that starts at 1 kg
         $this->assertSame(
-            Product::where('sale_type', 'weight')->count() * 3,
-            substr_count($response->getContent(), 'class="weight_chip')
+            Product::where('sale_type', 'weight')->count(),
+            substr_count($response->getContent(), 'class="weight_input" id="weight-input-')
         );
+        $response->assertSee('value="1" placeholder="1.25"', false);
     }
 
     public function test_weight_choices_are_sorted_and_default(): void

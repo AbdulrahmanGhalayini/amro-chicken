@@ -11,7 +11,6 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
@@ -160,25 +159,7 @@ class ProductForm
                     ->default('unit')
                     ->required()
                     ->live()
-                    ->afterStateUpdated(function ($state, callable $set, callable $get) {
-                        if ($state === 'weight' && empty($get('weight_options'))) {
-                            $set('weight_options', array_map('strval', \App\Models\Product::DEFAULT_WEIGHT_OPTIONS));
-                        }
-                    })
-                    ->columnSpanFull(),
-                TagsInput::make('weight_options')
-                    ->label('Weight choices (kg)')
-                    ->helperText('The weights the customer can pick, in kilograms. Example: 0.2, 0.5, 1 (type a number and press Enter).')
-                    ->placeholder('e.g. 0.25')
-                    ->suggestions(['0.1', '0.2', '0.25', '0.5', '0.75', '1', '1.5', '2'])
-                    ->nestedRecursiveRules(['numeric', 'gt:0', 'max:100'])
-                    ->default(array_map('strval', \App\Models\Product::DEFAULT_WEIGHT_OPTIONS))
-                    ->visible(fn (callable $get) => $get('sale_type') === 'weight')
-                    ->required(fn (callable $get) => $get('sale_type') === 'weight')
-                    ->dehydrateStateUsing(fn ($state) => collect($state ?? [])
-                        ->map(fn ($w) => (float) $w)
-                        ->filter(fn ($w) => $w > 0)
-                        ->unique()->sort()->values()->all() ?: null)
+                    ->helperText('Weight products start at 1 kg in the cart; customers can type any weight or change it by 0.1 kg.')
                     ->columnSpanFull(),
                 TextInput::make('price')
                     ->label(fn (callable $get) => match ($get('sale_type')) {
