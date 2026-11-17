@@ -64,17 +64,6 @@
 .weight_picker { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 8px 0 2px; }
 .weight_label { font-size: 13px; color: #555; }
 body.rtl .weight_picker { flex-direction: row-reverse; }
-.weight_stepper { display: inline-flex; align-items: center; gap: 6px; direction: ltr; }
-.weight_step {
-    border: 1px solid var(--theme-color);
-    background: #fff;
-    color: var(--theme-color);
-    border-radius: 999px;
-    width: 30px; height: 30px;
-    font-size: 18px; line-height: 1;
-    font-family: inherit;
-    cursor: pointer;
-}
 .cart_item_weight { font-size: 13px; color: #555; }
 .weight_input {
     width: 72px; padding: 4px 8px; font-size: 14px; font-family: inherit;
@@ -239,14 +228,10 @@ if($business->use_rate==1) {
                                         @endif
                                     </div>
                                     @if($product->isSoldByWeight())
-                                        {{-- Weight products start at 1 kg; the customer types any weight or steps by 0.1 kg --}}
+                                        {{-- Weight products start at 1 kg; the customer can type any weight (the cart has -/+ by 0.1 kg) --}}
                                         <div class="weight_picker" id="weight-picker-{{ $product->id }}">
                                             <span class="weight_label">{{ app()->getLocale() == 'ar' ? 'الوزن' : 'Weight' }}</span>
-                                            <span class="weight_stepper">
-                                            <button type="button" class="weight_step" aria-label="-0.1" onclick="stepWeight({{ $product->id }}, -1)">-</button>
                                             <input type="text" inputmode="decimal" class="weight_input" id="weight-input-{{ $product->id }}" value="1" placeholder="1.25" aria-label="{{ app()->getLocale() == 'ar' ? 'الوزن بالكيلو' : 'Weight in kg' }}" oninput="typeWeight({{ $product->id }}, this)">
-                                            <button type="button" class="weight_step" aria-label="+0.1" onclick="stepWeight({{ $product->id }}, 1)">+</button>
-                                            </span>
                                             <span class="weight_unit">{{ app()->getLocale() == 'ar' ? 'كغ' : 'kg' }}</span>
                                         </div>
                                     @endif
@@ -705,16 +690,6 @@ if($business->use_rate==1) {
     const typeWeight = (productId, input) => {
         const w = parseWeight(input.value);
         input.classList.toggle('invalid', input.value.trim() !== '' && w === null);
-    };
-    // -/+ next to the weight box on the product card: steps of 0.1 kg
-    const stepWeight = (productId, direction) => {
-        const input = document.getElementById('weight-input-' + productId);
-        if (!input) return;
-        const current = parseWeight(input.value) ?? DEFAULT_WEIGHT;
-        const next = roundWeight(current + direction * WEIGHT_STEP);
-        if (next <= 0 || next > MAX_WEIGHT) return;
-        input.value = next;
-        input.classList.remove('invalid');
     };
     // Number of "pieces" shown on the cart badge: a weight line counts as 1
     const countCart = () => local_cart.cart_list.reduce((total, item) => total + (item.item_unit === 'kg' ? 1 : item.item_count), 0);
