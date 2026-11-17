@@ -27,7 +27,7 @@ class EditCategory extends EditRecord
         }
 
         // Business admin: check if user_id in business_user table equals auth id
-        if ($authUser->hasRole('business_admin')) {
+        if ($authUser->hasRole('admin')) {
             $isAttached = \DB::table('businesses_users')
                 ->where('business_id', $businessId)
                 ->where('user_id', $authUser->id)
@@ -56,9 +56,9 @@ class EditCategory extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        // Ensure business_id is set for business_admins (cannot change)
+        // Ensure business_id is set for store admins (cannot change)
         $user = auth()->user();
-        if ($user && $user->hasRole('business_admin')) {
+        if ($user && $user->hasRole('admin')) {
             $data['business_id'] = $this->record->business_id;
         }
         

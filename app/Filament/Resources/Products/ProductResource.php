@@ -46,8 +46,8 @@ class ProductResource extends Resource
     {
         $user = auth()->user();
         
-        // Only super_admin and business_admin users can access
-        return $user && ($user->hasRole('super_admin') || $user->hasRole('business_admin'));
+        // Only super_admin and store admin users can access
+        return $user && ($user->hasRole('super_admin') || $user->hasRole('admin'));
     }
 
     public static function getRelations(): array
@@ -79,8 +79,8 @@ class ProductResource extends Resource
         if (auth()->user()?->hasRole('super_admin')) {
             return static::getModel()::count();
         }
-        elseif(auth()->user()?->hasRole('business_admin')) {
-            // For business_admin, show count of products created by them
+        elseif(auth()->user()?->hasRole('admin')) {
+            // For store admin, show count of products created by them
             return static::getModel()::join('businesses_users', 'products.business_id', '=', 'businesses_users.business_id')
                 ->where('businesses_users.user_id', auth()->id())
                 ->count();

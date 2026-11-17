@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Categories\Schemas;
 
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -16,34 +17,10 @@ class CategoryForm
 
         return $schema
             ->components([
-                Select::make('business_id')
-                    ->label('Business')
-                    ->options(function () use ($user) {
-                        $query = \App\Models\Business::query();
-                        
-                        // If business_admin, show only their business
-                        if ($user && $user->hasRole('business_admin')) {
-                            $businessIds = $user->businesses()->pluck('business_id')->toArray();
-                            $query->whereIn('id', $businessIds);
-                        }
-                        // Format options as "name_en - name_ar"
-                        return $query->get()->mapWithKeys(function ($business) {
-                            $label = ($business->name_en ?? '') . ' - ' . ($business->name_ar ?? '');
-                            return [$business->id => trim($label, ' - ')];
-                        });
-                    })
-                    ->default(function () use ($user) {
-                        // Set default value if user is business_admin
-                        if ($user && $user->hasRole('business_admin')) {
-                            return $user->businesses()->pluck('business_id')->first();
-                        }
-                        return null;
-                    })
-                    ->disabled(function () use ($user) {
-                        // Disabled for business_admins
-                        return $user && $user->hasRole('business_admin');
-                    })
-                    ->required()->live(),
+                // Single store: every record belongs to it.
+                Hidden::make('business_id')
+                    ->default(fn () => \App\Models\Business::current()?->id)
+                    ->required(),
                 TextInput::make('name_en')
                     ->visible(function ($get, $record) {
                         $businessId = $get('business_id') ?? ($record?->business_id);

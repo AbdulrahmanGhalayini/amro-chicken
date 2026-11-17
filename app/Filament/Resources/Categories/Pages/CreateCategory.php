@@ -14,7 +14,7 @@ class CreateCategory extends CreateRecord
         // Ensure business_id is set
         if (empty($data['business_id'])) {
             $user = auth()->user();
-            if ($user && $user->hasRole('business_admin')) {
+            if ($user && $user->hasRole('admin')) {
                 $data['business_id'] = $user->businesses()->pluck('business_id')->first();
             }
         }

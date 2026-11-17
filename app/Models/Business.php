@@ -44,6 +44,14 @@ class Business extends Model
     /**
      * Get the users attached to this business
      */
+    /**
+     * The one store this app runs (matches config('app.menu_slug')).
+     */
+    public static function current(): ?self
+    {
+        return static::where('slug', config('app.menu_slug'))->first() ?? static::query()->first();
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'businesses_users', 'business_id', 'user_id')

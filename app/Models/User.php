@@ -51,12 +51,27 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
+     * This app runs a single store with a single role: admin.
      * Filament blocks every user outside the local environment unless this says yes.
-     * Anyone holding one of the panel roles may sign in; permissions decide the rest.
      */
+    public const ADMIN_ROLE = 'admin';
+
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasAnyRole(['super_admin', 'business_admin', 'panel_user']);
+        return $this->hasRole(self::ADMIN_ROLE);
+    }
+
+    /**
+     * Give a user the admin role and attach them to the store.
+     */
+    public function makeStoreAdmin(): void
+    {
+        $this->syncRoles([\Spatie\Permission\Models\Role::findOrCreate(self::ADMIN_ROLE, 'web')]);
+
+        $store = Business::current();
+        if ($store && ! $this->businesses()->whereKey($store->id)->exists()) {
+            $this->businesses()->attach($store->id, ['created_by' => auth()->id() ?? $this->id]);
+        }
     }
 
     /**

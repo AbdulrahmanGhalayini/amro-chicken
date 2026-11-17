@@ -2,16 +2,14 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Unique;
 
 class UserForm
 {
+    /**
+     * Every user is a store admin, so there is no role to pick.
+     */
     public static function configure(Schema $schema): Schema
     {
         return $schema
@@ -21,22 +19,15 @@ class UserForm
                 TextInput::make('email')
                     ->label('Email address')
                     ->email()
-                    ->required(),
-                DateTimePicker::make('email_verified_at'),
+                    ->required()
+                    ->unique(ignoreRecord: true),
                 TextInput::make('password')
                     ->password()
-                    ->required(),
-                MultiSelect::make('roles')
-                    ->relationship('roles', 'name')
-                    ->options(Role::pluck('name', 'id')->toArray())
-                    ->searchable()
-                    ->visible(function() {
-                        $authUser = Auth::user();
-                        return $authUser && $authUser->hasRole('super_admin');
-                    })
-                    ->label('Roles')
-                    ->helperText('Select one or more roles'),
+                    ->revealable()
+                    ->minLength(8)
+                    ->required(fn (string $operation) => $operation === 'create')
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->helperText(fn (string $operation) => $operation === 'edit' ? 'Leave empty to keep the current password.' : null),
             ]);
     }
 }
-

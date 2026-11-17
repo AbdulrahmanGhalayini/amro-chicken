@@ -52,8 +52,8 @@ class OfferResource extends Resource
         if (auth()->user()?->hasRole('super_admin')) {
             return static::getModel()::count();
         }
-        elseif(auth()->user()?->hasRole('business_admin')) {
-            // For business_admin, show count of offers created by them
+        elseif(auth()->user()?->hasRole('admin')) {
+            // For store admin, show count of offers created by them
             return static::getModel()::join('businesses_users', 'offers.business_id', '=', 'businesses_users.business_id')
                 ->where('businesses_users.user_id', auth()->id())
                 ->count();

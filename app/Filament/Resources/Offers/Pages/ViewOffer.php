@@ -23,7 +23,7 @@ class ViewOffer extends ViewRecord
         }
 
         // Business admin: check if user_id in business_user table equals auth id
-        if ($authUser->hasRole('business_admin')) {
+        if ($authUser->hasRole('admin')) {
             $isAttached = \DB::table('businesses_users')
                 ->where('business_id', $businessId)
                 ->where('user_id', $authUser->id)

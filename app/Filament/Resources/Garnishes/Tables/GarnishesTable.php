@@ -24,7 +24,7 @@ class GarnishesTable
                     return $query;
                 }
                 
-                // If business_admin, show only garnishes from their first business
+                // Store admin, show only garnishes from their first business
                 $business = $user->businesses()->first();
                 if ($business) {
                     return $query->where('business_id', $business->id);

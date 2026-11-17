@@ -53,19 +53,7 @@ class UserResource extends Resource
     }
     public static function getNavigationBadge(): ?string
     {
-        if (auth()->user()?->hasRole('super_admin')) {
-            return static::getModel()::count();
-        }
-        elseif(auth()->user()?->hasRole('admin')) {
-            // For business_admin, show count of users created by them
-            return static::getModel()::join('businesses_users', 'users.id', '=', 'businesses_users.user_id')
-                ->where('businesses_users.created_by', auth()->id())
-                ->count();
-        }
-        else{
-            return null;
-        }
-        
+        return (string) static::getModel()::count();
     }
 }
 

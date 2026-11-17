@@ -8,21 +8,11 @@ use App\Models\Product;
 use App\Models\User;
 use App\Observers\CategoryObserver;
 use App\Observers\ProductObserver;
-use App\Policies\BusinessPolicy;
-use App\Policies\UserPolicy;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * The policy mappings for the application.
-     */
-    protected $policies = [
-        User::class => UserPolicy::class,
-        Business::class => BusinessPolicy::class,
-    ];
-
     /**
      * Register any application services.
      */
@@ -36,18 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->registerPolicies();
         $this->registerObservers();
-    }
-
-    /**
-     * Register the application's policies.
-     */
-    protected function registerPolicies(): void
-    {
-        foreach ($this->policies as $model => $policy) {
-            \Illuminate\Support\Facades\Gate::policy($model, $policy);
-        }
     }
 
     /**

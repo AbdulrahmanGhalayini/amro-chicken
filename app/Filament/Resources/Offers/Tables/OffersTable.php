@@ -19,9 +19,9 @@ class OffersTable
          ->modifyQueryUsing(function ($query) {
                 $user = auth()->user();
                 
-                // If user is business_admin, show only categories related to their business
-                if ($user && $user->hasRole('business_admin')) {
-                    // Get the business(es) attached to this business_admin
+                // If user is store admin, show only categories related to their business
+                if ($user && $user->hasRole('admin')) {
+                    // Get the business(es) attached to this store admin
                     $businessIds = $user->businesses()->pluck('business_id')->toArray();
                     $query->whereIn('business_id', $businessIds);
                 }

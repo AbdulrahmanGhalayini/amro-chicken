@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Garnishes\Schemas;
 
+use Filament\Forms\Components\Hidden;
 use App\Models\Business;
 use App\Models\Product;
 use Filament\Forms\Components\TextInput;
@@ -15,35 +16,10 @@ class GarnishForm
     {
         return $schema
             ->components([
-                Select::make('business_id')
-                    ->required()
-                    ->live()
-                    ->options(function () {
-                        $user = Auth::user();
-                        // If super admin, show all businesses
-                        if ($user->hasRole('super_admin')) {
-                            return Business::get()->mapWithKeys(function ($business) {
-                                $label = $business->name_en ?? $business->name_ar ?? 'Unnamed';
-                                return [$business->id => (string)$label];
-                            })->toArray();
-                        }
-                        // If business_admin, show only their first business
-                        $business = $user->businesses()->first();
-                        if (!$business) return [];
-                        
-                        $label = $business->name_en ?? $business->name_ar ?? 'Unnamed';
-                        return [$business->id => (string)$label];
-                    })
-                    ->default(function () {
-                        $user = Auth::user();
-                        $businessId = $user->businesses()->first()?->id;
-                        return $businessId;
-                    })
-                    ->disabled(function () {
-                        $user = Auth::user();
-                        return !$user->hasRole('super_admin');
-                    })
-                    ->dehydrated(),
+                // Single store: every record belongs to it.
+                Hidden::make('business_id')
+                    ->default(fn () => \App\Models\Business::current()?->id)
+                    ->required(),
                 Select::make('product_id')
                     ->required()
                     ->options(function (callable $get) {

@@ -46,15 +46,61 @@ class ExampleTest extends TestCase
 
     public function test_admin_can_open_panel_in_production(): void
     {
+        $this->seed(AmroChickenMenuSeeder::class);
         $this->app->detectEnvironment(fn () => 'production');
-        $role = \Spatie\Permission\Models\Role::create(['name' => 'super_admin', 'guard_name' => 'web']);
         $admin = \App\Models\User::factory()->create();
-        $admin->assignRole($role);
+        $admin->makeStoreAdmin();
         $nobody = \App\Models\User::factory()->create();
 
         $this->assertTrue($admin->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')));
         $this->assertFalse($nobody->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')));
         $this->actingAs($nobody)->get('/admin')->assertForbidden();
+
+        foreach (['/admin', '/admin/store-settings', '/admin/categories', '/admin/products',
+                  '/admin/products/create', '/admin/offers', '/admin/garnishes', '/admin/users', '/admin/users/create'] as $url) {
+            $this->actingAs($admin)->get($url)->assertOk();
+        }
+        $product = \App\Models\Product::first();
+        $this->actingAs($admin)->get("/admin/products/{$product->id}/edit")->assertOk();
+        $this->actingAs($admin)->get('/admin/businesses')->assertNotFound();
+        $this->actingAs($admin)->get('/admin/shield/roles')->assertNotFound();
+        $this->actingAs($admin)->get('/admin/activity-logs')->assertNotFound();
+    }
+
+    public function test_store_settings_save(): void
+    {
+        $this->seed(AmroChickenMenuSeeder::class);
+        $admin = \App\Models\User::factory()->create();
+        $admin->makeStoreAdmin();
+        $this->actingAs($admin);
+
+        \Livewire\Livewire::test(\App\Filament\Pages\StoreSettings::class)
+            ->set('data.theme_color', '#112233')
+            ->set('data.name_ar', 'عمرو تشكن ٢')
+            ->call('save')
+            ->assertHasNoErrors();
+
+        $this->assertSame('#112233', \App\Models\Business::current()->theme_color);
+        $this->assertSame('عمرو تشكن ٢', \App\Models\Business::current()->name_ar);
+    }
+
+    public function test_new_users_become_admins(): void
+    {
+        $this->seed(AmroChickenMenuSeeder::class);
+        $admin = \App\Models\User::factory()->create();
+        $admin->makeStoreAdmin();
+        $this->actingAs($admin);
+
+        \Livewire\Livewire::test(\App\Filament\Resources\Users\Pages\CreateUser::class)
+            ->set('data.name', 'Second')
+            ->set('data.email', 'second@example.com')
+            ->set('data.password', 'secret-pass-1')
+            ->call('create')
+            ->assertHasNoErrors();
+
+        $second = \App\Models\User::where('email', 'second@example.com')->firstOrFail();
+        $this->assertSame(['admin'], $second->getRoleNames()->all());
+        $this->assertTrue($second->businesses()->whereKey(\App\Models\Business::current()->id)->exists());
     }
 
     public function test_box_products_show_per_box_label(): void
