@@ -61,16 +61,7 @@
     display: block;
 }
 .per_kg_label { font-size: 13px; color: #777; margin-inline-start: 4px; }
-.weight_picker { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 8px 0 2px; }
-.weight_label { font-size: 13px; color: #555; }
-body.rtl .weight_picker { flex-direction: row-reverse; }
 .cart_item_weight { font-size: 13px; color: #555; }
-.weight_input {
-    width: 72px; padding: 4px 8px; font-size: 14px; font-family: inherit;
-    border: 1px solid var(--theme-color); border-radius: 999px; text-align: center; direction: ltr;
-}
-.weight_input.invalid { border-color: #e00; background: #fff0f0; }
-.weight_unit { font-size: 13px; color: #555; }
 .qty_display.weight_qty { display: inline-flex; align-items: center; gap: 4px; width: auto; min-width: 0; white-space: nowrap; }
 .cart_weight_input { width: 70px; padding: 4px 6px; font-size: 15px; font-family: inherit; text-align: center; border: 1px solid #ccc; border-radius: 6px; direction: ltr; }
 </style>
@@ -227,14 +218,6 @@ if($business->use_rate==1) {
                                             </div>
                                         @endif
                                     </div>
-                                    @if($product->isSoldByWeight())
-                                        {{-- Weight products start at 1 kg; the customer can type any weight (the cart has -/+ by 0.1 kg) --}}
-                                        <div class="weight_picker" id="weight-picker-{{ $product->id }}">
-                                            <span class="weight_label">{{ app()->getLocale() == 'ar' ? 'الوزن' : 'Weight' }}</span>
-                                            <input type="text" inputmode="decimal" class="weight_input" id="weight-input-{{ $product->id }}" value="1" placeholder="1.25" aria-label="{{ app()->getLocale() == 'ar' ? 'الوزن بالكيلو' : 'Weight in kg' }}" oninput="typeWeight({{ $product->id }}, this)">
-                                            <span class="weight_unit">{{ app()->getLocale() == 'ar' ? 'كغ' : 'kg' }}</span>
-                                        </div>
-                                    @endif
                                     @if($product->garnishes->isNotEmpty())
                                         <div class="garnish_list" id="garnish-{{ $product->id }}">
                                             @foreach ($product->garnishes as $garnish)
@@ -683,14 +666,6 @@ if($business->use_rate==1) {
         return (n > 0 && n <= MAX_WEIGHT) ? n : null;
     };
     const formatWeight = (w) => roundWeight(parseFloat(w)).toString() + ' ' + kgLabel;
-    const getSelectedWeight = (productId) => {
-        const input = document.getElementById('weight-input-' + productId);
-        return input ? parseWeight(input.value) : DEFAULT_WEIGHT;
-    };
-    const typeWeight = (productId, input) => {
-        const w = parseWeight(input.value);
-        input.classList.toggle('invalid', input.value.trim() !== '' && w === null);
-    };
     // Number of "pieces" shown on the cart badge: a weight line counts as 1
     const countCart = () => local_cart.cart_list.reduce((total, item) => total + (item.item_unit === 'kg' ? 1 : item.item_count), 0);
     const refreshCartCount = () => {
@@ -766,12 +741,8 @@ if($business->use_rate==1) {
     // Add item to cart
     const addToCart = (productId, productName, productPrice, saleType = 'unit') => {
         const isWeight = saleType === 'weight';
-        const weight = isWeight ? getSelectedWeight(productId) : null;
-        if (isWeight && weight === null) {
-            const input = document.getElementById('weight-input-' + productId);
-            if (input) { input.classList.add('invalid'); input.focus(); }
-            return;
-        }
+        // Weight items go in at 1 kg; the customer sets the weight in the cart
+        const weight = isWeight ? DEFAULT_WEIGHT : null;
         const itemKey = isWeight ? productId + '_kg' : String(productId);
         const existingItem = findItem(itemKey);
         

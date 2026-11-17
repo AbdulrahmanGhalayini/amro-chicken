@@ -26,12 +26,9 @@ class ExampleTest extends TestCase
 
         $response = $this->get('/menu/amro-chicken')->assertOk();
         $response->assertSee('جوانح');
-        // Every weight product gets a weight box that starts at 1 kg
-        $this->assertSame(
-            Product::where('sale_type', 'weight')->count(),
-            substr_count($response->getContent(), 'class="weight_input" id="weight-input-')
-        );
-        $response->assertSee('value="1" placeholder="1.25"', false);
+        // Weight is chosen in the cart only (starts at 1 kg), not on the menu card
+        $response->assertDontSee('weight-input-', false);
+        $response->assertSee('const DEFAULT_WEIGHT = 1;', false);
     }
 
     public function test_weight_choices_are_sorted_and_default(): void
