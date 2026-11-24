@@ -61,6 +61,20 @@
     display: block;
 }
 .per_kg_label { font-size: 13px; color: #777; margin-inline-start: 4px; }
+.weight_quick { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 0 2px; }
+body.rtl .weight_quick { flex-direction: row-reverse; }
+.weight_chip {
+    border: 1px solid var(--theme-color);
+    background: #fff;
+    color: var(--theme-color);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    line-height: 1.4;
+    cursor: pointer;
+}
+.weight_chip.added { background: var(--theme-color); color: #fff; }
 .cart_item_weight { font-size: 13px; color: #555; }
 .qty_display.weight_qty { display: inline-flex; align-items: center; gap: 4px; width: auto; min-width: 0; white-space: nowrap; }
 .cart_weight_input { width: 70px; padding: 4px 6px; font-size: 15px; font-family: inherit; text-align: center; border: 1px solid #ccc; border-radius: 6px; direction: ltr; }
@@ -218,6 +232,14 @@ if($business->use_rate==1) {
                                             </div>
                                         @endif
                                     </div>
+                                    @if($product->isSoldByWeight())
+                                        {{-- Quick add: each button puts that weight in the cart; the cart changes it by 0.1 kg --}}
+                                        <div class="weight_quick" aria-label="{{ app()->getLocale() == 'ar' ? 'أضف إلى السلة' : 'Add to cart' }}">
+                                            @foreach ([0.2, 0.5, 1] as $w)
+                                                <button type="button" class="weight_chip" onclick="addToCart({{ $product->id }}, @js($product->name), @js((string) $product->price), 'weight', {{ $w }}, this)">{{ $w }} {{ app()->getLocale() == 'ar' ? 'كغ' : 'kg' }}</button>
+                                            @endforeach
+                                        </div>
+                                    @endif
                                     @if($product->garnishes->isNotEmpty())
                                         <div class="garnish_list" id="garnish-{{ $product->id }}">
                                             @foreach ($product->garnishes as $garnish)
@@ -739,10 +761,14 @@ if($business->use_rate==1) {
     };
     
     // Add item to cart
-    const addToCart = (productId, productName, productPrice, saleType = 'unit') => {
+    // weightKg: the quick-add button pressed (0.2 / 0.5 / 1 kg); the cart icon adds 1 kg
+    const addToCart = (productId, productName, productPrice, saleType = 'unit', weightKg = null, chip = null) => {
         const isWeight = saleType === 'weight';
-        // Weight items go in at 1 kg; the customer sets the weight in the cart
-        const weight = isWeight ? DEFAULT_WEIGHT : null;
+        const weight = isWeight ? (parseWeight(weightKg) ?? DEFAULT_WEIGHT) : null;
+        if (chip) {
+            chip.classList.add('added');
+            setTimeout(() => chip.classList.remove('added'), 500);
+        }
         const itemKey = isWeight ? productId + '_kg' : String(productId);
         const existingItem = findItem(itemKey);
         
